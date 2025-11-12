@@ -15,5 +15,6 @@ Tools for processing OCO-3 netcdf data. Part of the 2025-2026 Data to Discovery 
 - https://github.com/EarthDigitalTwin/FireAlarm-notebooks/blob/main/9.%20OCO3.ipynb
 - https://github.com/robrnelson/OCO3_Tools
 
-#### Data sources
+#### Data sources (different ways of accessing the same OCO-3 files)
+- https://disc.gsfc.nasa.gov/datasets/OCO3_L2_Lite_FP_11r/summary?keywords=oco3
 - https://oco2.gesdisc.eosdis.nasa.gov/data/OCO3_DATA/OCO3_L2_Lite_FP.11r/
