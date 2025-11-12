@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+env/
+venv/
+.venv/
+
+# Data / outputs
+data/processed_nc4/
+data/processed_csv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets
+.env
+
+# OS / editor
+.DS_Store
+.vscode/
