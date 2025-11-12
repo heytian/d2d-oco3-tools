@@ -11,6 +11,9 @@ Tools for processing OCO-3 netcdf data. Part of the 2025-2026 Data to Discovery 
 - Run "python nc4-dl.py" in terminal. 
 - Delete bearer token from nc4-dl.py after files are downloaded!
 
+#### Convert nc4 to csv (for nc4s stored on Gdrive)
+- nc4_plot.ipynb open this file in Google Colab
+
 #### Other useful OCO-3 processing tools
 - https://github.com/EarthDigitalTwin/FireAlarm-notebooks/blob/main/9.%20OCO3.ipynb
 - https://github.com/robrnelson/OCO3_Tools
