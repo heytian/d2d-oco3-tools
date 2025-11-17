@@ -11,8 +11,10 @@ Tools for processing OCO-3 netcdf data. Part of the 2025-2026 Data to Discovery 
 - Run "python nc4-dl.py" in terminal. 
 - Delete bearer token from nc4-dl.py after files are downloaded!
 
-#### Convert nc4 to csv (for nc4s stored on Gdrive)
-- nc4_plot.ipynb open this file in Google Colab
+#### Convert nc4 to csv 
+- open the file "nc4_plot.ipynb" in Google Colab
+- There are 3 tools in there. Tool 1 is for processing nc4 files directly from the cloud (without local downloads) and into an aggregated CSV. This is probably the most useful!
+- Tool 2 is for the same process from locally downloaded files on Gdrive, and Tool 3 is for data exploration of variables within an NC4 file. 
 
 #### Other useful OCO-3 processing tools
 - https://github.com/EarthDigitalTwin/FireAlarm-notebooks/blob/main/9.%20OCO3.ipynb
@@ -21,3 +23,4 @@ Tools for processing OCO-3 netcdf data. Part of the 2025-2026 Data to Discovery 
 #### Data sources (different ways of accessing the same OCO-3 files)
 - https://disc.gsfc.nasa.gov/datasets/OCO3_L2_Lite_FP_11r/summary?keywords=oco3
 - https://oco2.gesdisc.eosdis.nasa.gov/data/OCO3_DATA/OCO3_L2_Lite_FP.11r/
+- Tips for accessing cloud nc4 files: https://disc.gsfc.nasa.gov/information/documents?title=Data%20Access#mac_linux_wget
