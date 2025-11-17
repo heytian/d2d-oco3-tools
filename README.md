@@ -1,6 +1,11 @@
 # d2d-oco3-tools
 Tools for processing OCO-3 netcdf data. Part of the 2025-2026 Data to Discovery (D2D) program.
 
+#### Convert nc4 to csv 
+- open the file "nc4_plot.ipynb" in Google Colab
+- There are 3 tools in there. Tool 1 is for processing nc4 files directly from the cloud (without local downloads) and into an aggregated CSV. This is probably the most useful!
+- Tool 2 is for the same process from locally downloaded files on Gdrive, and Tool 3 is for data exploration of variables within an NC4 file. 
+
 #### Batch download nc4 files:
 - Create an EarthData login profile at urs.earthdata.nasa.gov 
 - Go to "https://disc.gsfc.nasa.gov/datasets/OCO3_L2_Lite_FP_11r/summary?keywords=oco3", select "Subset/ Get Data"
@@ -10,11 +15,6 @@ Tools for processing OCO-3 netcdf data. Part of the 2025-2026 Data to Discovery 
 - Set file input and output paths in nc4-dl.py for the txt file, and add in your bearer token.
 - Run "python nc4-dl.py" in terminal. 
 - Delete bearer token from nc4-dl.py after files are downloaded!
-
-#### Convert nc4 to csv 
-- open the file "nc4_plot.ipynb" in Google Colab
-- There are 3 tools in there. Tool 1 is for processing nc4 files directly from the cloud (without local downloads) and into an aggregated CSV. This is probably the most useful!
-- Tool 2 is for the same process from locally downloaded files on Gdrive, and Tool 3 is for data exploration of variables within an NC4 file. 
 
 #### Other useful OCO-3 processing tools
 - https://github.com/EarthDigitalTwin/FireAlarm-notebooks/blob/main/9.%20OCO3.ipynb
