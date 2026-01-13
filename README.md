@@ -18,7 +18,6 @@ Tools for processing OCO-3 netcdf data. Part of the 2025-2026 Data to Discovery 
 - Delete bearer token from nc4-dl.py after files are downloaded!
 
 #### Other useful OCO-3 processing tools
-- https://github.com/EarthDigitalTwin/FireAlarm-notebooks/blob/main/9.%20OCO3.ipynb
 - https://github.com/robrnelson/OCO3_Tools
 - https://github.com/EarthDigitalTwin/FireAlarm-notebooks/blob/main/9.%20OCO3.ipynb
 
