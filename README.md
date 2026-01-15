@@ -3,8 +3,8 @@ Tools for processing OCO-3 netcdf data. Part of the 2025-2026 Data to Discovery 
 
 #### Convert nc4 to csv 
 - open the file "nc4_plot.ipynb" in Google Colab
-- There are multiple tools in there. Tool 1 is for processing nc4 files directly from the cloud (without local downloads) and into an aggregated CSV. This is probably the most useful!
-- Tools 2 and 3 are in progress.
+- There are multiple tools in there. Tools 1a & 1b are for processing nc4 files directly from the cloud (without local downloads) and into an aggregated CSV. Tool 3a is to produce a disaggregated version for CO2. 
+- Tools 2 and 3b (disaggregated for SIF) are in progress.
 - Tool 4 is for the same process from locally downloaded files on Gdrive, and Tool 5 is for data exploration of variables within an NC4 file. 
 
 #### Batch download nc4 files:
