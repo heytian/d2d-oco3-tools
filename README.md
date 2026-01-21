@@ -25,5 +25,5 @@ Tools for processing OCO-3 netcdf data. Part of the 2025-2026 Data to Discovery 
 - CO2: https://disc.gsfc.nasa.gov/datasets/OCO3_L2_Lite_FP_11r/summary?keywords=oco3
 - SIF: https://disc.gsfc.nasa.gov/datasets/OCO3_L2_Lite_SIF_11r/summary?keywords=oco3
 - CO2: https://oco2.gesdisc.eosdis.nasa.gov/data/OCO3_DATA/OCO3_L2_Lite_FP.11r/
-- SIF: https://oco2.gesdisc.eosdis.nasa.gov/data/OCO3_DATA/OCO3_L2_Lite_SIF_11r/
+- SIF: https://oco2.gesdisc.eosdis.nasa.gov/data/OCO3_DATA/OCO3_L2_Lite_SIF.11r/
 - Tips for accessing cloud nc4 files: https://disc.gsfc.nasa.gov/information/documents?title=Data%20Access#mac_linux_wget
