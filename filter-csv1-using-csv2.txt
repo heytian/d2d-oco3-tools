@@ -1,0 +1,26 @@
+import csv
+
+def read_from_file(csv_file):
+    with open(csv_file, 'r', newline='', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        return list(reader)
+
+data_from_first_csv = read_from_file("<file path to 1st csv>")
+data_from_second_csv = read_from_file("<file path to 2nd csv>")
+
+cities_to_match = {
+    row[0].strip().lower()
+    for row in data_from_second_csv
+}
+
+output_data = []
+
+for row in data_from_first_csv:
+    city = row[0].strip().lower()
+    if city in cities_to_match:
+        output_data.append(row)
+
+with open("SIF_olympic.csv", "w", newline='', encoding='utf-8') as f:
+    writer = csv.writer(f)
+    writer.writerows(output_data)
+
