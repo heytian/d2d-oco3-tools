@@ -63,3 +63,46 @@ CROSS JOIN LATERAL (
     ORDER BY c2.geom <-> ne_cities.geom
     LIMIT 1
 ) ref;
+
+-- Step 7: create smaller version by checking column size
+---- step 7.1: check column size to see which ones to cut
+SELECT
+    attname AS column,
+    pg_size_pretty(sum(pg_column_size(attname::text)))
+FROM pg_attribute
+WHERE attrelid = 'co2_sam_cities_pop'::regclass
+AND attnum > 0
+GROUP BY attname
+ORDER BY sum(pg_column_size(attname::text)) DESC;
+---- step 7.2: then create smaller version
+CREATE TABLE co2_sam_cities_pop_s AS
+SELECT
+    xco2,
+    datetime,
+    local_time,
+    latitude,
+    longitude,
+    city,
+    country,
+    population
+FROM co2_sam_cities_pop;
+---step 7.3 change column types to further reduce size (run once)
+ALTER TABLE co2_sam_cities_pop_s
+    ALTER COLUMN datetime TYPE TIMESTAMP
+        USING datetime::timestamp,
+    ALTER COLUMN local_time TYPE TIMESTAMP
+        USING local_time::timestamp;
+    ALTER COLUMN xco2 TYPE REAL; -- didn't really affect size
+
+-- other debugging functions
+
+SELECT
+    EXTRACT(YEAR FROM datetime::timestamp) AS year,
+    COUNT(*) as row_count
+FROM co2_sam_cities_pop
+GROUP BY year
+ORDER BY year;
+
+SELECT pg_size_pretty(pg_total_relation_size('co2_sam_cities_pop_s'));
+
+SHOW data_directory;
