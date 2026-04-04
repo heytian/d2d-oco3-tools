@@ -8,8 +8,8 @@ venv/
 .venv/
 
 # Data / outputs
-data/processed_nc4/
-data/processed_csv/
+datasource/
+output/
 
 # Jupyter
 .ipynb_checkpoints/
