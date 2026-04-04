@@ -1,4 +1,7 @@
-# 20260403 - Adding city names and population from Natural Earth data to clasp report centroid csv
+#%%
+
+# 20260404
+# Step 1: Adding city names and population from Natural Earth data to clasp report centroid csv
 
 import pandas as pd
 from shapely import wkt
@@ -33,5 +36,5 @@ targets['Population'] = cities.iloc[flat]['POP_MAX'].values
 output_path = "./output/csv/"
 targets.to_csv(output_path+'clasp_report_379cities_plus_v2.csv', index=False)
 
-
+#%%
 
