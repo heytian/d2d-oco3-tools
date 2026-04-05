@@ -24,33 +24,28 @@ sif = sif[(sif["datetime"] >= start) & (sif["datetime"] <= end)]
 
 # 20260405 update: previously extracted mean CO2 conc and sif values from OCO3 data, but now to look at median instead
 
-co2_median = (
+co2_agg = (
     co2.groupby("city")["xco2"]
-    .median().reset_index().rename(columns={"xco2": "xco2_ppm"})
+    .agg(
+        xco2_ppm="median",
+        xco2_n="count", # how many SAMs per city from OCO-3 data
+        xco2_std="std" # standard deviation; spread within each city
+    )
+    .reset_index()
 )
-sif_median = (
+
+sif_agg = (
     sif.groupby("city")["Daily_SIF_757nm"]
-    .median().reset_index().rename(columns={"Daily_SIF_757nm": "sif_757nm"})
+    .agg(
+        sif_757nm="median",
+        sif_n="count", # how many SAMs per city from OCO-3 data
+        sif_std="std" # spread within each city
+    )
+    .reset_index()
 )
 
-merged = co2_median.merge(sif_median, on="city", how="outer")
+merged = co2_agg.merge(sif_agg, on="city", how="outer")
 
-# # diagnostic - compare median with mean
-# co2_compare = (
-#     co2.groupby("city")["xco2"]
-#     .agg(mean="mean", median="median", std="std", n="count")
-#     .reset_index()
-# )
-# co2_compare["co2_mean_median_diff"] = co2_compare["mean"] - co2_compare["median"]
-# print(co2_compare.sort_values("co2_mean_median_diff", ascending=False).to_string(index=False))
-
-# sif_compare = (
-#     sif.groupby("city")["Daily_SIF_757nm"]
-#     .agg(mean="mean", median="median", std="std", n="count")
-#     .reset_index()
-# )
-# sif_compare["sif_mean_median_diff"] = sif_compare["mean"] - sif_compare["median"]
-# print(sif_compare.sort_values("sif_mean_median_diff", ascending=False).to_string(index=False))
 
 #%%
 emissions_cols = [
@@ -63,9 +58,27 @@ merged = merged.merge(
     left_on="city", right_on="TargetName", how="left"
 ).drop(columns="TargetName")
 
+#%%
+merged = merged.rename(columns={
+    "Country":                                      "country",
+    "TargetRegion":                                 "region",
+    "Population":                                   "population",
+    "GDP [billion USD]":                            "gdp_bil_usd",
+    "Annual CO2 Emissions, OCO-3 [MtCO2 year-1]":  "annual_co2_em_mtco2",
+    "Number of SAMs":                               "numsams_ahn2025",
+    "xco2_n":                                       "xco2_numsams",
+    "xco2_std":                                     "co2_std",
+    "sif_n":                                        "sif_numsams",
+    "sif_std":                                      "sif_std",
+})
+
+merged["low_sample_count"] = merged["xco2_numsams"] < 100
+
+#%%
+
 PERCENTILE = 75 # adjust to your liking
 
-em_col   = "Annual CO2 Emissions, OCO-3 [MtCO2 year-1]"
+em_col   = "annual_co2_em_mtco2"
 conc_col = "xco2_ppm"
 
 em_thresh   = np.percentile(merged[em_col].dropna(),   PERCENTILE)
@@ -87,12 +100,14 @@ merged["quadrant"] = merged.apply(quadrant, axis=1)
 print("\nQuadrant counts:")
 print(merged["quadrant"].value_counts())
 print("\nCities by quadrant:")
-print(merged[["city", "Country", "xco2_ppm", em_col, "quadrant"]]
+print(merged[["city", "country", "xco2_ppm", em_col, "quadrant"]]
       .sort_values(["quadrant", em_col], ascending=[True, False])
       .to_string(index=False))
 
+
 output_path = "./output/csv/"
 merged.to_csv(output_path+"c40cities-co2-em-conc.csv", index=False)
+
 
 
 
