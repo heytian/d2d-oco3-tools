@@ -75,13 +75,20 @@ print(city_gdf[["city", "coastal_km", "is_coastal"]]
       .sort_values("coastal_km")
       .to_string(index=False))
 
+# targets = targets.merge(
+#     city_gdf[["city", "coastal_km", "is_coastal"]],
+#     on="city", how="left"
+# )
+
 targets = targets.merge(
-    city_gdf[["city", "coastal_km", "is_coastal"]],
-    on="city", how="left"
+    city_gdf[["geometry", "coastal_km", "is_coastal"]].reset_index(),
+    left_on="Site Center WKT",
+    right_on="geometry",
+    how="left"
 )
 
 output_path = "./output/csv/"
-targets.to_csv(output_path+'clasp_report_356sams-pop-gdp-coastal.csv', index=False)
+targets.to_csv(output_path+'clasp_report_356sams-pop-gdp-coast.csv', index=False)
 
 #%%
 
