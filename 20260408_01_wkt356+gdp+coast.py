@@ -54,11 +54,21 @@ targets['gdp_bil_usd'] = ((targets['population'] * targets['2024']) / 1000000000
 world=gpd.read_file(get_path("naturalearth.land"))
 coastlines=world.boundary
 
+# city_gdf = gpd.GeoDataFrame(
+#     targets[["city", "Site Center WKT"]].dropna(subset=["Site Center WKT"]),
+#     geometry=targets["Site Center WKT"].dropna().apply(wkt.loads),
+#     crs="EPSG:4326"
+# )
+
 city_gdf = gpd.GeoDataFrame(
-    targets[["city", "Site Center WKT"]].dropna(subset=["Site Center WKT"]),
+    targets[["city", "Site Center WKT", "Target ID"]].dropna(subset=["Site Center WKT"]),
     geometry=targets["Site Center WKT"].dropna().apply(wkt.loads),
-    crs="EPSG:4326"
+    crs="EPSG:4326",
+    index=targets[targets["Site Center WKT"].notna()].index  # ← Preserve original index
 )
+
+city_gdf["Target ID"] = targets[targets["Site Center WKT"].notna()]["Target ID"].values
+
 
 city_gdf    = city_gdf.to_crs("EPSG:3857")
 coastlines  = coastlines.to_crs("EPSG:3857")
@@ -76,14 +86,15 @@ print(city_gdf[["city", "coastal_km", "is_coastal"]]
       .to_string(index=False))
 
 # targets = targets.merge(
-#     city_gdf[["city", "coastal_km", "is_coastal"]],
-#     on="city", how="left"
+#     city_gdf[["geometry", "coastal_km", "is_coastal"]].reset_index(),
+#     left_on="Site Center WKT",
+#     right_on="geometry",
+#     how="left"
 # )
 
 targets = targets.merge(
-    city_gdf[["geometry", "coastal_km", "is_coastal"]].reset_index(),
-    left_on="Site Center WKT",
-    right_on="geometry",
+    city_gdf[["Target ID", "coastal_km", "is_coastal"]],
+    on="Target ID",
     how="left"
 )
 
