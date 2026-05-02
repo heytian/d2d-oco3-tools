@@ -98,8 +98,14 @@ print(f"Masked points   : {mask.sum()}  ({mask.sum()/len(series):.1%})")
 # ─────────────────────────────────────────────────────────────────────────────
 # 5. BASELINE IMPUTERS
 # ─────────────────────────────────────────────────────────────────────────────
-mean_pred   = np.where(mask, np.nanmean(x_missing), series)
+# mean_pred   = np.where(mask, np.nanmean(x_missing), series)
+
+knn_raw     = KNNImputer(n_neighbors=5).fit_transform(
+                  x_missing.reshape(-1, 1)).flatten()
+knn_pred    = np.where(mask, knn_raw, series)
+
 interp_pred = pd.Series(x_missing).interpolate().bfill().ffill().values
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 6. LSTM IMPUTER
@@ -178,7 +184,7 @@ seasons_arr = np.array([get_season(m) for m in full_idx.month])
 season_list = ['Winter', 'Spring', 'Summer', 'Autumn']
 
 methods = {
-    'Mean':          mean_pred,
+    'KNN':          knn_pred,
     'Interpolation': interp_pred,
     'LSTM':          lstm_pred,
 }
@@ -233,7 +239,7 @@ ax.scatter(timestamps[mask], series[mask],
            color='red', s=50, zorder=6, label='Masked (gap) points')
 
 styles    = ['--', '-.', ':', '-']
-pal       = ['#2A788EFF', '#414487FF','#22A884FF']
+pal       = ["#0073CBFF", '#414487FF','#22A884FF']
 
 for (name, pred), ls, col in zip(methods.items(), styles, pal):
     # Full faint line — shows where each method runs
@@ -254,7 +260,7 @@ fig.autofmt_xdate()
 ax2   = axes[1]
 x_pos = np.arange(len(season_list))
 w     = 0.2
-cols  = ['#2A788EFF', '#414487FF','#22A884FF']
+cols  = ['#0073CBFF', '#414487FF','#22A884FF']
 
 for i, (name, pred) in enumerate(methods.items()):
     vals = [rmse(pred, series, mask & (seasons_arr == s))
